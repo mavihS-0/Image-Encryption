@@ -1,7 +1,7 @@
 import socket
-from diffie_hellman import generate_private_key, compute_public_key, compute_shared_key
-from gen_p_q import generate_p_g
-from encryption import encrypt
+from modules.diffie_hellman import generate_private_key, compute_public_key, compute_shared_key
+from modules.gen_p_q import generate_p_g
+from modules.encryption import encrypt
 
 def client():
     # Establish connection
@@ -42,7 +42,7 @@ def client():
     shared_key = compute_shared_key(private_key,server_public_key, p)
 
     # Encrypt image
-    hmac_tag = encrypt(shared_key.hex(),image_name)
+    hmac_tag = encrypt(shared_key.hex(),str(image_name))
     print('Encrypted image')
 
     # Send HMAC tag to server

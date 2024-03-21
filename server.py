@@ -1,6 +1,6 @@
 import socket
-from diffie_hellman import generate_private_key, compute_public_key, compute_shared_key
-from decryption import decrypt
+from modules.diffie_hellman import generate_private_key, compute_public_key, compute_shared_key
+from modules.decryption import decrypt
 
 def server():
     # Establish connection
@@ -38,14 +38,18 @@ def server():
 
     # Receive image name from client
     image_name = connection.recv(1024).decode()
-    print('Received image name')
+    print('Received image name '+str(image_name))
+
 
     # Compute shared key
     shared_key = compute_shared_key(private_key,client_public_key, p)
 
     # Decrypt image
-    decrypt(shared_key.hex(),hmac_tag,image_name)
+    decrypt(shared_key.hex(),hmac_tag,str(image_name))
     print('Decrypted image')
+
+    # Print shared key
+    print('Shared Key: '+shared_key.hex())
 
     # Close connection
     connection.close()
