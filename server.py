@@ -1,6 +1,6 @@
 import socket
-from modules.diffie_hellman import generate_private_key, compute_public_key, compute_shared_key
-from modules.decryption import decrypt
+from diffie_hellman import generate_private_key, compute_public_key, compute_shared_key
+from decryption import decrypt
 
 def server():
     # Establish connection

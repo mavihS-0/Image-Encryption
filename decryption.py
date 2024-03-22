@@ -1,4 +1,4 @@
-from modules.hmac_verify import calculate_hmac, verify_hmac
+from hmac_verify import calculate_hmac, verify_hmac
 
 def image_to_hex(image_path):
     with open(image_path, 'rb') as f:
@@ -59,7 +59,7 @@ def decrypt(shared_key,hmac_tag,image_name):
     hmac_key = shared_key[32:] # Last 128 bits
 
     # Convert image to hex string
-    image_path = 'images/encrypted_'+image_name
+    image_path = 'encrypted_'+image_name
     image_hex = image_to_hex(image_path)
 
     if not verify_hmac(image_hex, hmac_key, hmac_tag):
@@ -73,6 +73,6 @@ def decrypt(shared_key,hmac_tag,image_name):
     decrypted_hex = decrypt_image(image_hex, mask_hex)
 
     # Convert decrypted hex string back to image
-    output_image_path = 'images/decrypted_'+image_name
+    output_image_path = 'decrypted_'+image_name
     hex_to_image(decrypted_hex, output_image_path)
 
