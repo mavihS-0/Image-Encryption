@@ -65,6 +65,8 @@ def decrypt(shared_key,hmac_tag,image_name):
     if not verify_hmac(image_hex, hmac_key, hmac_tag):
         print("HMAC verification failed. Image integrity compromised.")
         return
+    else:
+        print("HMAC verification successful. Image integrity maintained.")
 
     # Generate mask using the same key as encryption
     mask_hex = generate_mask(key_hex, len(image_hex))  

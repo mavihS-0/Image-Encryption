@@ -20,7 +20,7 @@ def client():
     print('Private key: ', private_key)
     
     # Compute public key
-    public_key = compute_public_key(p, q, private_key)
+    public_key = compute_public_key(private_key, p, q)
     print('Public key: ', public_key)
 
     # Send p, q, and public key to server
@@ -40,6 +40,7 @@ def client():
 
     # Compute shared key
     shared_key = compute_shared_key(private_key,server_public_key, p)
+    print('Shared Key: '+shared_key.hex())
 
     # Encrypt image
     hmac_tag = encrypt(shared_key.hex(),str(image_name))

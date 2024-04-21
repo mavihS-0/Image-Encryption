@@ -25,7 +25,7 @@ def server():
     print('Private key: ', private_key)
 
     # Compute public key
-    public_key = compute_public_key(p, q, private_key)
+    public_key = compute_public_key(private_key, p, q)
     print('Public key: ', public_key)
 
     # Send server's public key to client
@@ -43,13 +43,11 @@ def server():
 
     # Compute shared key
     shared_key = compute_shared_key(private_key,client_public_key, p)
+    print('Shared Key: '+shared_key.hex())
 
     # Decrypt image
     decrypt(shared_key.hex(),hmac_tag,str(image_name))
-    print('Decrypted image')
-
-    # Print shared key
-    print('Shared Key: '+shared_key.hex())
+    print('Decrypted image')  
 
     # Close connection
     connection.close()
