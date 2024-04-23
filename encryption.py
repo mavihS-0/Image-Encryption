@@ -11,6 +11,25 @@ def hex_to_image(hex_string, output_path):
     with open(output_path, 'wb') as f:
         f.write(image_bytes)
 
+def add_number_to_hex(hex_string, x):
+    # Convert hex string to bytes
+    bytes_data = bytes.fromhex(hex_string)
+    
+    # Initialize an empty byte array to store the modified bytes
+    modified_bytes = bytearray()
+
+    # Iterate through each byte in the bytes data
+    for byte in bytes_data:
+        # Add x to the byte and take modulo 16
+        new_byte = (byte + x) % 256
+        # Append the modified byte to the bytearray
+        modified_bytes.append(new_byte)
+
+    # Convert the modified bytes back to hex string
+    new_hex_string = modified_bytes.hex()
+
+    return new_hex_string
+
 def generate_mask(key_hex, length):
     key_bytes = bytes.fromhex(key_hex)
     mask = bytearray()
@@ -58,13 +77,22 @@ def encrypt(shared_key,image_name):
     image_path = str(image_name)
     image_hex = image_to_hex(image_path)
 
+    encrypted_hex = image_hex
 
-    # Generate mask using a 128-bit hexadecimal key
-    mask_hex = generate_mask(key_hex, len(image_hex))
+    # 16 rounds of encryption using the key
+    for i in range(0,32,2):
+        # Convert the hexadecimal byte to an integer
+        key_generator = int(key_hex[i:i+2], 16)
 
-    # XOR the image hex string with the mask
-    encrypted_hex = xor_hex_strings(image_hex, mask_hex)
+        # Add the integer to the key
+        key_hex = add_number_to_hex(key_hex,key_generator)
+        
+        # Generate mask using a 128-bit hexadecimal key
+        mask_hex = generate_mask(key_hex, len(image_hex))
 
+        # XOR the image hex string with the mask
+        encrypted_hex = xor_hex_strings(encrypted_hex, mask_hex)
+      
     # Calculate HMAC tag
     hmac_tag = calculate_hmac(hmac_key, encrypted_hex)
 
@@ -72,3 +100,7 @@ def encrypt(shared_key,image_name):
     output_image_path = 'encrypted_'+image_name
     hex_to_image(encrypted_hex, output_image_path)
     return hmac_tag
+
+
+
+    
