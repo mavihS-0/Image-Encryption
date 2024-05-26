@@ -1,6 +1,6 @@
 # Image Encryption : Using hex masking with Diffie Hellman Key Exchange and HMAC for Enhanced Security
 
-For details about Proposed Mode, Problem Statement, Related Work and Result Analysis, refer to **Report.pdf**
+For details about Proposed Mode, Problem Statement, Related Work and Result Analysis, refer to [**Report.pdf**](https://github.com/mavihS-0/Image-Encryption/blob/master/Report.pdf)
 
 ## Algorithm Flowchart
 
